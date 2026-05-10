@@ -108,29 +108,50 @@ router.get('/fetch_brands', function (req, res, next) {
 
 });
 
-router.get('/display_all_brands',function(req,res,next){
-    try{
-      pool.query('select * from brands group by brandname',function(error,result){
-        if(error)
-        {
-        res.status(200).json({status:false,message:'Database error,pls contact database admin'})
-  
-        }
-        else
-        {
-          res.status(200).json({data:result,status:true,message:'Success'})
-        }
-  
-  
+router.get('/display_all_brands', function (req, res, next) {
+  try {
+      pool.query('SELECT * FROM brands', function (error, result) {
+          if (error) {
+              res.status(200).json({ status: true, message: 'Database error,pls contact database admin' })
+          }
+          else {
+              res.status(200).json({ status: true, data:result, message: 'success' })
+          }
       })
+
   }
-  catch(e)
-  {
-  
-      res.status(200).json({status:false,message:'Server Error....'})
+  catch (e) {
+      console.log("server error ",e)
+      res.status(200).json({ status: false, message: 'Server Error...' })
   }
+
+});
+
+// router.get('/display_all_brands',function(req,res,next){
+//     try{
+//     //   pool.query('select * from brands group by brandname',function(error,result){
+//       pool.query('SELECT * FROM brands',function(error,result){
+//         if(error)
+//         {
+//         console.log("SQL ERROR DETAILS:", error);
+//         res.status(200).json({status:false,message:'Database error,pls contact database admin'})
   
-  })
+//         }
+//         else
+//         {
+//           res.status(200).json({data:result,status:true,message:'Success'})
+//         }
+  
+  
+//       })
+//   }
+//   catch(e)
+//   {
+  
+//       res.status(200).json({status:false,message:'Server Error....'})
+//   }
+  
+//   })
 
   router.post('/fetch_productdetails_by_productid', function(req, res, next) {
     try{
